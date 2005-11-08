@@ -13,9 +13,9 @@ function render_file($file) {
 # header.txt
 echo render_file('header.txt');
 
-echo "<h2>Processo: debconf</h2>\n";
+echo '<h2>Processo: debconf</h2>' . "\n";
 
-echo "<p>Os dados destas tabelas sao actualizados automatica e periodicamente todos os dias pares às 8h22</p>\n";
+echo '<p>Os dados destas tabelas sao actualizados automatica e periodicamente todos os dias pares às 8h22</p>' . "\n";
 
 $pself = $_SERVER[PHP_SELF];
 
@@ -29,16 +29,16 @@ if ($_GET['op'] == 'update') {
     $db->Sql($sql);
 }
 
-echo "<div>\n";
+echo '<div>' . "\n";
 
-echo "<form method=\"post\" action=\"$pself\">";
+echo '<form method="post" action="' . $pself . '">';
 
-echo 'SELECT * FROM pacote WHERE estado = <select name="estado">';
+echo 'Seleccionar todos os pacotes onde o seu estado é: <select name="estado">';
 echo '<option value="Por traduzir">Por traduzir</option>';
 echo '<option value="A ser traduzido">A ser traduzido</option>';
 echo '<option value="OK">Traduzido</option>';
 
-echo '</select> ORDER BY <select name="order">';
+echo '</select> ordenado por: <select name="order">';
 
 echo '<option value="nome">nome</option>';
 echo '<option value="versao">versao</option>';
@@ -47,16 +47,16 @@ echo '<option value="estado">estado</option>';
 echo '<option value="data">data</option>';
 echo '<option value="dias_passados">dias_passados</option>';
 
-echo '</select> <select name="sentido">';
+echo '</select> de forma: <select name="sentido">';
 
-echo '<option value="ASC">ASC</option>';
-echo '<option value="DESC">DESC</option>';
+echo '<option value="ASC">Ascendente</option>';
+echo '<option value="DESC">Descendente</option>';
 echo '</select> ; <br /><br />';
 
 echo '<input type="submit" value="executar" />';
 echo '</form>';
 
-echo "</div>\n";
+echo '</div>' . "\n";
 
 $f1 = $_POST['estado'];
 $f2 = $_POST['order'];
@@ -93,7 +93,7 @@ foreach($tabela as $pacote) {
     $link  = 'http://merkel.debian.org/~barbier/l10n/material/po/unstable/';
     $link .= $f3 . '.gz';
 
-    $f1 = "<a href=\"$link\">$f1</a>";
+    $f1 = '<a href="' . $link . '">' . $f1 . '</a>';
 
     $tabela_nova[$i++] = array($f1, $f2, $f4, $f5, $f6, $f7);
 }
@@ -112,20 +112,20 @@ $tabela = $db->Sql($sql);
 # fields are OUT
 array_shift($tabela);
 
-echo "<p>Quero traduzir o pacote:</p>\n";
+echo '<p>Quero traduzir o pacote:</p>' . "\n";
 
-echo "<form method=\"post\" action=\"$pself?op=update\">\n";
-echo "<select name=\"pacote\">\n";
+echo '<form method="post" action="' . $pself . '?op=update">' . "\n";
+echo '<select name="pacote">' . "\n";
 
 foreach($tabela as $pacote) {
     $f1 = $pacote['id'];
     $f2 = $pacote['nome'];
-    echo "<option value=\"$f1\">$f2</option>\n";
+    echo '<option value="' . $f1 . '">' . $f2. '</option>' . "\n";
 }
 
-echo "</select><br /><br />\n";
-echo "<input type=\"submit\" value=\"executar\" />\n";
-echo "</form>\n";
+echo '</select><br /><br />' . "\n";
+echo '<input type="submit" value="executar" />' . "\n";
+echo '</form>' . "\n";
 
 $db->Disconnect();
 
