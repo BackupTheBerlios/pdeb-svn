@@ -1,7 +1,7 @@
 #!/bin/sh
 
 u1="pdeb"
-p1="theequai8oap"
+p1="x"
 
 cd /home/users/mferra/pdeb
 
