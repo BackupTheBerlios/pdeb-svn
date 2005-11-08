@@ -15,7 +15,7 @@ echo render_file('header.txt');
 
 echo '<h2>Processo: debconf</h2>' . "\n";
 
-echo '<p>Os dados destas tabelas sao actualizados automatica e periodicamente todos os dias pares às 8h22</p>' . "\n";
+echo '<p>Os dados destas tabelas sao actualizados automatica e periodicamente todos os dias pares às 8:22 horas</p>' . "\n";
 
 $pself = $_SERVER[PHP_SELF];
 
@@ -40,12 +40,12 @@ echo '<option value="OK">Traduzido</option>';
 
 echo '</select> ordenado por: <select name="order">';
 
-echo '<option value="nome">nome</option>';
-echo '<option value="versao">versao</option>';
+echo '<option value="nome">Nome</option>';
+echo '<option value="versao">Versao</option>';
 echo '<option value="t_statis">t_statis</option>';
-echo '<option value="estado">estado</option>';
-echo '<option value="data">data</option>';
-echo '<option value="dias_passados">dias_passados</option>';
+echo '<option value="estado">Estado</option>';
+echo '<option value="data">Data</option>';
+echo '<option value="dias_passados">Dias Passados</option>';
 
 echo '</select> de forma: <select name="sentido">';
 
@@ -53,7 +53,7 @@ echo '<option value="ASC">Ascendente</option>';
 echo '<option value="DESC">Descendente</option>';
 echo '</select> ; <br /><br />';
 
-echo '<input type="submit" value="executar" />';
+echo '<input type="submit" value="Executar" />';
 echo '</form>';
 
 echo '</div>' . "\n";
@@ -99,7 +99,7 @@ foreach($tabela as $pacote) {
 }
 
 # update fields
-$tabela_nova[0] = array('nome', 'versao', 't_statis', 'estado', 'data', 'dias_passados');
+$tabela_nova[0] = array('Nome', 'Versao', 't_statis', 'Estado', 'Data', 'Dias Passados');
 
 echo $db->RTable($tabela_nova);
 
@@ -124,7 +124,7 @@ foreach($tabela as $pacote) {
 }
 
 echo '</select><br /><br />' . "\n";
-echo '<input type="submit" value="executar" />' . "\n";
+echo '<input type="submit" value="Executar" />' . "\n";
 echo '</form>' . "\n";
 
 $db->Disconnect();
