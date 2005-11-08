@@ -10,19 +10,14 @@ function render_file($file) {
     return $res;
 }
 
-$pself = $_SERVER[PHP_SELF];
-
 # header.txt
-
 echo render_file('header.txt');
 
 echo "<h2>Processo: debconf</h2>\n";
 
 echo "<p>Os dados destas tabelas sao actualizados automatica e periodicamente todos os dias pares às 8h22</p>\n";
 
-# nota:  quando fizer commit para o svn mudar a password para 'x'
-
-$db = new Database('pdeb', 'pdeb', 'x', 'db.berlios.de');
+$pself = $_SERVER[PHP_SELF];
 
 if ($_GET['op'] == 'update') {
     $id = $_POST['pacote'];
@@ -34,40 +29,49 @@ if ($_GET['op'] == 'update') {
     $db->Sql($sql);
 }
 
-$l1 = "<a href=\"$pself?vista=1\">Por traduzir</a>";
-$l2 = "<a href=\"$pself?vista=2\">A ser traduzido</a>";
-$l3 = "<a href=\"$pself?vista=3\">Traduzido</a>";
-$l4 = "<a href=\"$pself?vista=4\">Todos</a>";
+echo "<div>\n";
 
-echo "<p>Ponto de vista:</p>\n";
+echo "<form method=\"post\" action=\"$pself\">";
 
-echo "<ol>\n";
-echo "<li>$l1</li>\n";
-echo "<li>$l2</li>\n";
-echo "<li>$l3</li>\n";
-echo "<li>$l4</li>\n";
-echo "</ol>\n";
+echo 'SELECT * FROM pacote WHERE estado = <select name="estado">';
+echo '<option value="Por traduzir">Por traduzir</option>';
+echo '<option value="A ser traduzido">A ser traduzido</option>';
+echo '<option value="OK">Traduzido</option>';
 
-switch ($_GET['vista']) {
-case 1:
-    $estado = "estado = 'Por traduzir'";
-    break;
-case 2:
-    $estado = "estado = 'A ser traduzido'";
-    break;
-case 3:
-    $estado = "estado = 'OK'";
-    break;
-case 4:
-    $estado = "id = id";
-    break;
-    default: $estado = "estado = 'nada'";
-    break;
+echo '</select> ORDER BY <select name="order">';
+
+echo '<option value="nome">nome</option>';
+echo '<option value="versao">versao</option>';
+echo '<option value="t_statis">t_statis</option>';
+echo '<option value="estado">estado</option>';
+echo '<option value="data">data</option>';
+echo '<option value="dias_passados">dias_passados</option>';
+
+echo '</select> <select name="sentido">';
+
+echo '<option value="ASC">ASC</option>';
+echo '<option value="DESC">DESC</option>';
+echo '</select> ; <br /><br />';
+
+echo '<input type="submit" value="executar" />';
+echo '</form>';
+
+echo "</div>\n";
+
+$f1 = $_POST['estado'];
+$f2 = $_POST['order'];
+$f3 = $_POST['sentido'];
+
+$sql  = 'SELECT nome, versao, t_file_l, t_statis, estado, data, ';
+$sql .= '(to_days(curdate()) - to_days(data)) AS dias_passados FROM pacote ';
+
+if (isset($_POST['estado'])) {
+    $sql .= "WHERE estado = '$f1' ORDER BY $f2 $f3";
+} else {
+    $sql .= "WHERE id = '0'";
 }
 
-$sql  = "SELECT nome, versao, t_file_l, t_statis, estado, data, ";
-$sql .= "(to_days(curdate()) - to_days(data)) AS dias_passados FROM pacote ";
-$sql .= "WHERE $estado ORDER BY nome";
+$db = new Database('mferra', 'mferra', 'Peipae5l', 'localhost');
 
 $tabela = $db->Sql($sql);
 
@@ -125,6 +129,7 @@ echo "</form>\n";
 
 $db->Disconnect();
 
+# footer.txt
 echo render_file('footer.txt');
 
 ?>

@@ -9,7 +9,6 @@ function render_file($file) {
 }
 
 # header.txt
-
 echo render_file('header.txt');
 
 echo "<h2>Saltar para o processo:</h2>\n";
@@ -24,6 +23,7 @@ echo "<p>Para obter todos os ficheiros que concebem este site:</p>\n";
 echo "<div><code>shell$ svn checkout svn://svn.berlios.de/pdeb/trunk<code></div>\n";
 echo "<div><code>shell$ svn checkout http://svn.berlios.de/svnroot/repos/pdeb/trunk<code></div>\n";
 
+# footer.txt
 echo render_file('footer.txt');
 
 ?>
