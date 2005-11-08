@@ -1,0 +1,13 @@
+create table pacote (
+    id int unsigned not null auto_increment primary key,
+    nome varchar(255) unique,
+    versao varchar(255),
+    t_statis varchar(255),
+    t_file_l varchar(255),
+    i_statis varchar(255),
+    i_file_l varchar(255),
+    i_pessoa varchar(255),
+    i_equipa varchar(255),
+    estado varchar(255),
+    data date
+);
