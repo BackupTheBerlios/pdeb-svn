@@ -33,7 +33,7 @@ echo '<div>' . "\n";
 
 echo '<form method="post" action="' . $pself . '">';
 
-echo 'Seleccionar todos os pacotes onde o seu estado é: <select name="estado">';
+echo 'Seleccionar os pacotes onde o seu estado é: <select name="estado">';
 echo '<option value="Por traduzir">Por traduzir</option>';
 echo '<option value="A ser traduzido">A ser traduzido</option>';
 echo '<option value="OK">Traduzido</option>';
