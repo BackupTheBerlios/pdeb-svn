@@ -11,17 +11,7 @@ h2 {
   font-size: large;
 }
 
-p {
-  font-size: small;
-  line-height: 1.6em;
-}
-
-div {
-  font-size: small;
-  line-height: 1.6em;
-}
-
-li {
+p, li, div {
   font-size: small;
   line-height: 1.6em;
 }

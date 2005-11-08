@@ -19,6 +19,11 @@ echo "<li><a href=\"ts.php\">d-i e manual</a></li>\n";
 echo "<li><a href=\"debconf.php\">debconf</a></li>\n";
 echo "</ul>\n";
 
+echo "<p>Para obter todos os ficheiros que concebem este site:</p>\n";
+
+echo "<div><code>shell$ svn checkout svn://svn.berlios.de/pdeb/trunk<code></div>\n";
+echo "<div><code>shell$ svn checkout http://svn.berlios.de/svnroot/repos/pdeb/trunk<code></div>\n";
+
 echo render_file('footer.txt');
 
 ?>
