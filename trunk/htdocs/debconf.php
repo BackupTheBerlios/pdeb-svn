@@ -71,7 +71,7 @@ if (isset($_POST['estado'])) {
     $sql .= "WHERE id = '0'";
 }
 
-$db = new Database('mferra', 'mferra', 'Peipae5l', 'localhost');
+$db = new Database('pdeb', 'pdeb', 'x', 'db.berlios.de');
 
 $tabela = $db->Sql($sql);
 
