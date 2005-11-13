@@ -1,7 +1,5 @@
 <?php
 
-require('mfsql.inc');
-
 function render_file($file) {
     $x = file($file);
     foreach($x as $line) {
@@ -13,11 +11,17 @@ function render_file($file) {
 # header.txt
 echo render_file('header.txt');
 
+require('mfsql.inc');
+
 echo '<h2>Processo: debconf</h2>' . "\n";
 
 echo '<p>Os dados destas tabelas sao actualizados automatica e periodicamente todos os dias pares às 8:22 horas</p>' . "\n";
 
 $pself = $_SERVER[PHP_SELF];
+
+# abrir a BD
+
+$db = new Database('pdeb', 'pdeb', 'x', 'db.berlios.de');
 
 if ($_GET['op'] == 'update') {
     $id = $_POST['pacote'];
@@ -33,7 +37,7 @@ echo '<div>' . "\n";
 
 echo '<form method="post" action="' . $pself . '">';
 
-echo 'Seleccionar os pacotes onde o seu estado é: <select name="estado">';
+echo 'Seleccionar os pacotes cujo o estado é: <select name="estado">';
 echo '<option value="Por traduzir">Por traduzir</option>';
 echo '<option value="A ser traduzido">A ser traduzido</option>';
 echo '<option value="OK">Traduzido</option>';
@@ -70,8 +74,6 @@ if (isset($_POST['estado'])) {
 } else {
     $sql .= "WHERE id = '0'";
 }
-
-$db = new Database('pdeb', 'pdeb', 'x', 'db.berlios.de');
 
 $tabela = $db->Sql($sql);
 
