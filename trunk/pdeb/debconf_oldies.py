@@ -70,6 +70,6 @@ def cruzar():
 def sql_delete():
     obsoletos = cruzar()
     for x in obsoletos:
-        print 'delete from pacote where nome = \'' + x[1] + '\''
+        print 'delete from pacote where nome = \'' + x[1] + '\'' + ';'
 
 sql_delete()
