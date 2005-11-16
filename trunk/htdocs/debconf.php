@@ -1,6 +1,7 @@
 <?php
 
-function render_file($file) {
+function render_file($file)
+{
     $x = file($file);
     foreach($x as $line) {
         $res .= $line;
@@ -38,23 +39,23 @@ echo '<div>' . "\n";
 echo '<form method="post" action="' . $pself . '">';
 
 echo 'Seleccionar os pacotes cujo o estado é: <select name="estado">';
-echo '<option value="Por traduzir">Por traduzir</option>';
-echo '<option value="A ser traduzido">A ser traduzido</option>';
-echo '<option value="OK">Traduzido</option>';
+echo '<option value="Por traduzir">por traduzir</option>';
+echo '<option value="A ser traduzido">a ser traduzido</option>';
+echo '<option value="OK">traduzido</option>';
 
 echo '</select> ordenado por: <select name="order">';
 
-echo '<option value="nome">Nome</option>';
-echo '<option value="versao">Versao</option>';
+echo '<option value="nome">nome</option>';
+echo '<option value="versao">versao</option>';
 echo '<option value="t_statis">t_statis</option>';
-echo '<option value="estado">Estado</option>';
-echo '<option value="data">Data</option>';
-echo '<option value="dias_passados">Dias Passados</option>';
+echo '<option value="estado">estado</option>';
+echo '<option value="data">data</option>';
+echo '<option value="dias_passados">dias passados</option>';
 
 echo '</select> de forma: <select name="sentido">';
 
-echo '<option value="ASC">Ascendente</option>';
-echo '<option value="DESC">Descendente</option>';
+echo '<option value="ASC">ascendente</option>';
+echo '<option value="DESC">descendente</option>';
 echo '</select> ; <br /><br />';
 
 echo '<input type="submit" value="Executar" />';
@@ -69,41 +70,49 @@ $f3 = $_POST['sentido'];
 $sql  = 'SELECT nome, versao, t_file_l, t_statis, estado, data, ';
 $sql .= '(to_days(curdate()) - to_days(data)) AS dias_passados FROM pacote ';
 
+$tabela_mostra = 0;
+
 if (isset($_POST['estado'])) {
     $sql .= "WHERE estado = '$f1' ORDER BY $f2 $f3";
+    $tabela_mostra = 1;
 } else {
     $sql .= "WHERE id = '0'";
+    $tabela_mostra = 0;
 }
 
-$tabela = $db->Sql($sql);
+if ($tabela_mostra) {
 
-# linhas
-echo "<p>Pacotes desta vista: " . (count($tabela) - 1) . "</p>\n";
+    $tabela = $db->Sql($sql);
 
-$tabela_nova = array();
-$i = 0;
+    # linhas
+    echo "<p>Pacotes desta vista: " . (count($tabela) - 1) . "</p>\n";
 
-foreach($tabela as $pacote) {
-    $f1 = $pacote['nome'];
-    $f2 = $pacote['versao'];
-    $f3 = $pacote['t_file_l'];
-    $f4 = $pacote['t_statis'];
-    $f5 = $pacote['estado'];
-    $f6 = $pacote['data'];
-    $f7 = $pacote['dias_passados'];
+    $tabela_nova = array();
+    $i = 0;
 
-    $link  = 'http://merkel.debian.org/~barbier/l10n/material/po/unstable/';
-    $link .= $f3 . '.gz';
+    foreach($tabela as $pacote) {
+        $f1 = $pacote['nome'];
+        $f2 = $pacote['versao'];
+        $f3 = $pacote['t_file_l'];
+        $f4 = $pacote['t_statis'];
+        $f5 = $pacote['estado'];
+        $f6 = $pacote['data'];
+        $f7 = $pacote['dias_passados'];
 
-    $f1 = '<a href="' . $link . '">' . $f1 . '</a>';
+        $link  = 'http://merkel.debian.org/~barbier/l10n/material/po/unstable/';
+        $link .= $f3 . '.gz';
 
-    $tabela_nova[$i++] = array($f1, $f2, $f4, $f5, $f6, $f7);
+        $f1 = '<a href="' . $link . '">' . $f1 . '</a>';
+
+        $tabela_nova[$i++] = array($f1, $f2, $f4, $f5, $f6, $f7);
+    }
+
+    # update fields
+    $tabela_nova[0] = array('Nome', 'Versao', 't_statis', 'Estado', 'Data', 'Dias Passados');
+
+    echo $db->RTable($tabela_nova);
+
 }
-
-# update fields
-$tabela_nova[0] = array('Nome', 'Versao', 't_statis', 'Estado', 'Data', 'Dias Passados');
-
-echo $db->RTable($tabela_nova);
 
 # desenhar form #2
 $sql  = "SELECT id, nome FROM pacote ";
