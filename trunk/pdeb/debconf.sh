@@ -5,7 +5,7 @@ p1="x"
 
 cd /home/users/mferra/pdeb
 
-curl -s -o unstable.gz http://merkel.debian.org/~barbier/l10n/material/data/unstable.gz
+wget -q -r -nd http://merkel.debian.org/~barbier/l10n/material/data/unstable.gz
 gunzip -f unstable.gz
 
 # updates
